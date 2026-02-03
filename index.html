@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>💘 Valentine?</title>
+  <style>
+    body{
+      margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #ffe3ec, #ffd1dc, #ffc2d1);
+      color:#2b2b2b;
+      overflow:hidden;
+    }
+    .card{
+      width:min(560px, 92vw);
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.15);
+      text-align:center;
+      position:relative;
+    }
+    h1{ margin:0 0 10px; font-size: 34px; }
+    p{ margin:0 0 18px; font-size: 18px; line-height:1.45; }
+    .buttons{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top: 10px; }
+    button{
+      border:0; border-radius: 999px; padding: 12px 18px;
+      font-size:16px; font-weight:650; cursor:pointer;
+    }
+    #yes{ background:#ff3b7a; color:white; }
+    #no{
+      background:#ffffff; color:#ff3b7a; border:2px solid #ff3b7a;
+      position:relative;
+    }
+    .small{ margin-top:16px; font-size:13px; opacity:.75; }
+    .heart{ font-size: 42px; margin-bottom: 8px; }
+    #msg{ margin-top:16px; font-size:18px; font-weight:700; color:#ff2e72; }
+    #details{
+      margin-top:14px; padding: 14px; border-radius: 16px;
+      background: rgba(255,59,122,.08);
+      display:none;
+    }
+    #details h2{ margin:0 0 8px; font-size:18px; }
+    #details ul{ list-style:none; padding:0; margin:0; font-size:16px; }
+    #details li{ margin:6px 0; }
+    .floating-heart{
+      position: absolute;
+      font-size: 18px;
+      animation: floatUp 1.2s ease-out forwards;
+      pointer-events:none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-140px) scale(1.4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="heart">💖</div>
+    <h1>Will you be my Valentine?</h1>
+    <p>
+      I have a question for my favorite person…<br/>
+      Will you be my Valentine? 🥺
+    </p>
+
+    <div class="buttons">
+      <button id="yes">Yes 💘</button>
+      <button id="no">No 🙃</button>
+    </div>
+
+    <div id="msg"></div>
+
+    <div id="details">
+      <h2>Date details (you can edit these):</h2>
+      <ul>
+        <li>📍 <strong>Place:</strong> Your choice 😌</li>
+        <li>🕖 <strong>Time:</strong> This weekend</li>
+        <li>🍓 <strong>Plan:</strong> Dinner + something cute</li>
+      </ul>
+    </div>
+
+    <div class="small">(P.S. the “No” button is shy 😅)</div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const msg = document.getElementById("msg");
+    const details = document.getElementById("details");
+
+    function moveNo() {
+      const maxX = 240, maxY = 120;
+      const x = Math.floor(Math.random() * (maxX * 2 + 1)) - maxX;
+      const y = Math.floor(Math.random() * (maxY * 2 + 1)) - maxY;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function popHearts(count = 14) {
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.textContent = ["💖","💘","💕","💗","💞"][Math.floor(Math.random()*5)];
+        heart.style.left = (40 + Math.random() * 80) + "%";
+        heart.style.top = (55 + Math.random() * 10) + "%";
+        heart.style.animationDelay = (Math.random() * 0.25) + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }
+    }
+
+    noBtn.addEventListener("mouseenter", moveNo);
+    noBtn.addEventListener("click", moveNo);
+
+    yesBtn.addEventListener("click", () => {
+      msg.textContent = "YAY!!! 💞 You’re my Valentine!!!";
+      details.style.display = "block";
+      noBtn.style.display = "none";
+      yesBtn.textContent = "Locked in 💍 (kidding… unless?)";
+      popHearts();
+    });
+  </script>
+</body>
+</html>
